@@ -31,13 +31,12 @@ const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null)
 
   const handleSigUp = useCallback(async (data: ISignUpData) => {
-    console.log(data)
     try {
       formRef.current?.setErrors({})
       const schemaValidation = Yup.object().shape({
         fullname: Yup.string().required('Nome obrigatório'),
         email: Yup.string().required('E-mail obrigatório').email('E-mail inválido'),
-        phone: Yup.string().required('Fone obrigatório'),
+        phone: Yup.string().min(11, 'Fone precisa ter ao menos 11 dígitos'),
         cpf_cnpj: Yup.string()
           .test('validCPF', 'CPF inválido', (cpfValue: any) => {
             if (!cpfValue) return false
@@ -48,6 +47,7 @@ const SignUp: React.FC = () => {
       await schemaValidation.validate(data, {
         abortEarly: false,
       })
+      console.log(data)
       console.log('Deu certo!')
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
@@ -59,8 +59,6 @@ const SignUp: React.FC = () => {
   const testData = {
     fullname: 'teste',
     email: 't@t.t',
-    cpf_cnpj: '01827050136',
-    phone: '4199999999',
   }
   return (
     <>
