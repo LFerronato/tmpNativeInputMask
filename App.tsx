@@ -1,23 +1,37 @@
-import { StatusBar } from 'expo-status-bar'
+// eslint-disable-next-line no-use-before-define
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { View, StatusBar } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { AppLoading } from 'expo'
+import {
+  Archivo_400Regular,
+  Archivo_500Medium,
+  Archivo_600SemiBold,
+  Archivo_700Bold,
+  useFonts,
+} from '@expo-google-fonts/archivo'
 
-import SignUp from './src/pages/SignUp'
+import Routes from './src/routes'
 
-export default function App() {
+const App: React.FC = () => {
+  const [fontsLoaded] = useFonts({
+    Archivo_400Regular,
+    Archivo_500Medium,
+    Archivo_600SemiBold,
+    Archivo_700Bold,
+  })
+
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
   return (
-    <View style={styles.container}>
-      <SignUp />
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <StatusBar barStyle="light-content" backgroundColor="#777777" />
+      <View style={{ flex: 1, backgroundColor: '#777777' }}>
+        <Routes />
+      </View>
+    </NavigationContainer>
   )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})
+export default App

@@ -39,7 +39,7 @@ const SignUp: React.FC = () => {
         email: Yup.string().required('E-mail obrigatório').email('E-mail inválido'),
         phone: Yup.string().required('Fone obrigatório'),
         cpf_cnpj: Yup.string()
-          .test('validCPF', 'CPF inválido', (cpfValue: string) => {
+          .test('validCPF', 'CPF inválido', (cpfValue: any) => {
             if (!cpfValue) return false
             return cpf.isValid(cpfValue)
           })
